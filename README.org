@@ -1,0 +1,18 @@
+#+TITLE: jekyll-svgcleaner: svgcleaner generator for Jekyll
+
+* Installation
+svgcleaner is available through Homebrew:
+
+#+BEGIN_SRC sh
+$ brew install svgcleaner
+#+END_SRC
+
+For manual installation refer to Reizner Evgeniy's svgcleaner repository
+https://github.com/RazrFalcon/svgcleaner.
+
+
+* Usage
+
+#+BEGIN_SRC sh
+$ jekyll serve
+#+END_SRC
