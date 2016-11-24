@@ -16,8 +16,8 @@ module Jekyll
 
         config = configuration(@site.source)
 
-        unless File.exist? config.svg_path
-          puts "Unable to find a valid configuration: svg_path=#{config.svg_path}"
+        unless File.exist? config[:svg_path]
+          puts "Unable to find a valid configuration: svg_path=#{config[:svg_path]}"
           return
         end
 
@@ -31,11 +31,11 @@ module Jekyll
 
         print "      Cleaning SVG files... "
 
-        svg_files Dir["#{config.svg_path}/*.svg"]
+        svg_files Dir["#{config[:svg_path]}/*.svg"]
 
         svg_files.each do |file|
           file_input = File.absolute_path(file)
-          file_output = "#{config.images_path}/#{file}"
+          file_output = "#{config[:images_path]}/#{file}"
 
           puts "#{file_input} => #{file_output}"
 
@@ -54,7 +54,6 @@ module Jekyll
       # @return [::SVGCleaner::Configuration]
       def configuration(source)
         config = Configuration.default_configuration
-        config[:project_path] = source
         config.extend(@site.data['svgcleaner'] || {})
         unless config.has_key? :svg_path
           config[:svg_path] = File.join(source, config[:svg_dir])
