@@ -35,6 +35,9 @@ module Jekyll
 
         svg_files = Dir["#{config[:svg_path]}/*.svg"]
 
+        FileUtils.mkdir_p(config[:images_path]) unless
+          File.exist?(config[:images_path])
+
         svg_files.each do |file|
           file_output = "#{config[:images_path]}/#{File.basename(file)}"
 

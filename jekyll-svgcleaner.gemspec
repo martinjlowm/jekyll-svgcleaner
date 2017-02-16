@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'jekyll-svgcleaner'
-  s.version     = '0.1a-3-g9e74de5'
+  s.version     = '0.1a-4-g4c7adf8'
   s.summary     = "Jekyll generator plugin to clean and minify SVG vector files."
   s.description = <<-EOF
     This project integrates with Jekyll, the static website generator, and
