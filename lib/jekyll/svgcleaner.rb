@@ -10,6 +10,6 @@ end
 require 'jekyll'
 
 # Internal requires
-%w{generator configuration}.each do |f|
+%w{generator configuration cleaned_file}.each do |f|
   require "jekyll/svgcleaner/#{f}"
 end

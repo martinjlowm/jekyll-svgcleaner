@@ -12,10 +12,12 @@ module Jekyll
       # @param site [Jekyll::Site] The site to generate for
       # @return [void]
       def generate(site)
+        puts ''
+        puts 'Jekyll SVGCleaner...'
+
         @site = site
 
         config = configuration(@site.source)
-
         unless File.exist? config[:svg_path]
           puts "Unable to find a valid configuration: svg_path=#{config[:svg_path]}"
           return
@@ -29,20 +31,21 @@ module Jekyll
           return
         end
 
-        print "      Cleaning SVG files... "
+        puts "Cleaning SVG files... "
 
-        svg_files Dir["#{config[:svg_path]}/*.svg"]
+        svg_files = Dir["#{config[:svg_path]}/*.svg"]
 
         svg_files.each do |file|
-          file_input = File.absolute_path(file)
-          file_output = "#{config[:images_path]}/#{file}"
+          file_output = "#{config[:images_path]}/#{File.basename(file)}"
 
-          puts "#{file_input} => #{file_output}"
+          puts "#{file} => #{file_output}"
 
-          `svgcleaner #{file_input} #{file_output}`
+          puts `svgcleaner #{file} #{file_output}`
+
+          site.static_files << CleanedFile.new(site, site.dest,
+                                               config[:images_dir],
+                                               File.basename(file))
         end
-
-        nil
       end
 
       private
@@ -54,6 +57,7 @@ module Jekyll
       # @return [::SVGCleaner::Configuration]
       def configuration(source)
         config = Configuration.default_configuration
+
         config.extend(@site.data['svgcleaner'] || {})
         unless config.has_key? :svg_path
           config[:svg_path] = File.join(source, config[:svg_dir])
@@ -62,6 +66,8 @@ module Jekyll
         unless config.has_key? :images_path
           config[:images_path] = File.join(source, "_site/#{config[:images_dir]}")
         end
+
+        config
       end
 
     end
